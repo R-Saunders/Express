@@ -1,7 +1,7 @@
 const { response } = require('express');
 const express = require('express');
 const cors = require('cors');
-
+const axios = require('axios');
 const app = express();
 app.use(cors());
 
@@ -23,6 +23,14 @@ const data = [
     dream : "ReFi Dev"
 
   }]
+
+  const reqAPI = 'https://api.sampleapis.com/codingresources/codingResources';
+
+  app.get('/resources', async(req,res)=>{
+    console.log('resources');
+    const reqAPIResult = await axios.get(reqAPI);
+    res.json(reqAPIResult.data);
+  })
 
 app.get('/', (request,response)=>{
   response.send('<h1>Hello World</h1>');
