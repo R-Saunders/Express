@@ -50,3 +50,18 @@ app.get('/data', (req, res)=>{
 app.listen(8989, ()=>{
   console.log('http://localhost:8989');
 })
+
+// Get individual item PARAMS
+app.get('/resources/:id', async(req,res)=>{
+  const reqAPIResult = await axios.get(reqAPI);
+  const id = parseInt(req.params.id);
+  res.send(reqAPIResult.data.find(items => items.id === id));
+})
+
+// Get individual item QUERIES
+app.get('/resource', async(req,res)=>{
+  const reqAPIResult = await axios.get(reqAPI);
+  const desc = req.query.description;
+  console.log(reqAPIResult.data.filter(items => items.description === desc))
+  res.send(reqAPIResult.data.filter(items => items.description === desc));
+})
