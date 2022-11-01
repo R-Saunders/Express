@@ -130,9 +130,9 @@ const beastsModal = mongoose.model("Names", beastsSchema);
 app.post("/beasts/create", (req, res) => {
 	// Create a new obj
 	const newData = new beastsModal({
-		name: "Cyclops",
-		heads: 1,
-		mythology: "Greek",
+		name: req.body.name,
+		heads: req.body.heads,
+		mythology: req.body.mythology,
 	});
 	newData.save();
 	res.send("Data Sent Successfully");
