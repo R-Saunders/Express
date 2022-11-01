@@ -147,11 +147,40 @@ app.get('/read',async(req,res)=>{
   res.send(allData);
 })
 
-// Get one record
+// Get one record by ID
 app.get('/read/:id',async(req,res)=>{
   const _id = req.params.id;
   const reqData = await beastsModal.findById(_id);
   res.send(reqData);
+});
+
+// Updating a record
+app.patch('/updates/:id', async(req, res)=>{
+	const _id = req.params.id;
+	const reqData = await beastsModal.findById(_id);
+	reqData.name = "Sir Testington";
+	reqData.save();
+	res.send(reqData);
+});
+
+// Deleting a record
+app.delete('/delete/:id', async(req, res)=>{
+	const _id = req.params.id;
+	await beastsModal.findByIdAndDelete(_id);
+	res.send(`ID:${_id} deleted`);
+});
+
+// Deleting a record, second method
+app.delete('/deletetwo/:id', async(req,res)=>{
+	const _id = req.params.id;
+
+	try{
+		await beastsModal.deleteOne({id:_id});
+		const allData = await beastsModal.find();
+		res.send(allData);
+	}catch(error){
+		console.log(error);
+	}
 });
 
 app.listen(8011, () => {
